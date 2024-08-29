@@ -8,7 +8,9 @@ bool fill_buffer(bool * bitbuf, size_t * buf_size, bool * bitbuf_read_head){
     }
     // Read from stdin (indeterminate length), keep track of buffer size
     char buf[(4 * 1024 * 1024)/8];
-    size_t increase = fread(buf, 1, sizeof(buf), stdin);
+    // The max bytes here is sizeof(buf) - ceil(*buf_size/8) expressed in a roundabout way.
+    // This will fill our byte buffer as much as possible for the bit buffer to be near-full in the next step.
+    size_t increase = fread(buf, 1, sizeof(buf) - ((*buf_size+8-1)/8), stdin);
     // Extract bits from byte buffer
     for(size_t i = 0; i < increase; i++){
         for(int j = 0; j < 8; j++){
@@ -27,25 +29,28 @@ int main(){
     while(true){
         if(buf_size < 8){ // 8 bits, length of longest key
             bitbuf_read_head = bitbuf;
-            if(!fill_buffer(bitbuf, &buf_size)){
+            if(!fill_buffer(bitbuf, &buf_size, bitbuf_read_head)){
                 break;
             }
         }
         int max_key_size = (buf_size < 8) ? buf_size : 8;
-        // Produce keys in descending order, check for first match, write to stdout, then move buffer head
-        for(int key_size = max_key_size; key_size > 0; key_size--){
-            uint8_t key = 0;
-            for(int i = 0; i < key_size; i++){
-                key |= bitbuf_read_head[i] << (key_size - i - 1);
+        // Produce keys in descending order, check for first match, write to stdout, then move buffer head. If there are no codewords of length n (that is, LUT[n] is NULL), then we skip to the next length.
+        for(int i = max_key_size; i > 0; i--){
+            if(LUT[i] == NULL){
+                continue;
             }
-            if(LUT[key]){
-                putchar(LUT[key]);
-                bitbuf_read_head += key_size;
-                buf_size -= key_size;
+            uint8_t key = 0;
+            for(int j = 0; j < i; j++){
+                key |= bitbuf_read_head[j] << (i - j - 1);
+            }
+            if(LUT[i][key] != 0){
+                putchar(LUT[i][key]);
+                bitbuf_read_head += i;
+                buf_size -= i;
                 break;
             }
         }
     }
-    // Flush stdout
     putchar('\n');
+    return 0; // Add this line to indicate successful program execution
 }
