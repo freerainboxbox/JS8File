@@ -1,7 +1,7 @@
 #include "js8file_enc.h"
 
 // From stdin
-bool fill_buffer(bool * bitbuf, size_t *buf_size, bool * bitbuf_read_head){
+bool fill_buffer(bool * bitbuf, size_t * buf_size, bool * bitbuf_read_head){
     // Justify remaining buffer back to the beginning
     if(*buf_size > 0){
         memmove(bitbuf, bitbuf + *buf_size, *buf_size);

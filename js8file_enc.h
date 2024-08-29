@@ -1,5 +1,5 @@
 #include "ref.h"
-const char LUT[0b11101011] = {
+const char LUT[0b100000000] = {
     [0b0] = ' ',
     [0b1] = 'e',
     [0b1101] = 'T',
