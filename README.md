@@ -22,7 +22,7 @@ You need a C compiler and `make`. If you're on Windows, either use MinGW or just
 
 Clone the repo and just run `make` inside the repo directory. This will produce `js8file-enc` and `js8file-dec`.
 
-Both of these programs operate through standard input and output. You cannot specify a filename as an argument, instead, use I/O redirection.
+Both of these programs operate through standard input and output. You cannot specify a filename as an argument, instead, use I/O redirection (in line with [Unix philosophy](http://www.catb.org/~esr/writings/taoup/html/ch01s06.html)).
 
 `js8file-enc`: Given a filename `file.dat`, run `./js8file-enc < file.dat`, and it will output to your terminal screen. You can then copy this to the transmit window in JS8call (be sure to include the `FILE:` prefix!)
 
