@@ -38,4 +38,6 @@ _NOTE_: `js8file-enc` emits an `<EOF>` tag that should not be copied. This exist
 
 3. It might find some use for hams who aren't using English. Any UTF-8 encoded file can be fed into this program and sent over the air, meaning all languages are supported.
 
+Also, this is not 100% uber stress tested. There may be a couple of stray, hard-to-spot bugs.
+
 _de KD2STC_
