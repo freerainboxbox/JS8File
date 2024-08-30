@@ -16,6 +16,8 @@ As far as I can tell from the source code, only the symbols I have selected have
 
 JS8call does not send lowercase. Even if we were to use a BaseN scheme fitting into the dedicated short codeword alphabet that just listed characters in lexicographic order, it would not be as efficient.
 
+UPDATE: Looking more carefully, it seems to be some subset of Varicode (which is used by PSK31). It should be possible to extend my usable symbols even further, and this will be done in a future iteration.
+
 ## How do I use it?
 
 You need a C compiler and `make`. If you're on Windows, either use MinGW or just run it on a WSL distro.
