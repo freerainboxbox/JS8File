@@ -4,7 +4,7 @@
 bool fill_buffer(bool * bitbuf, size_t * buf_size, bool * bitbuf_read_head){
     // Justify remaining buffer back to the beginning
     if(*buf_size > 0){
-        memmove(bitbuf, bitbuf + *buf_size, *buf_size);
+        memmove(bitbuf, bitbuf + *bitbuf_read_head, *buf_size);
     }
     // Read from stdin (indeterminate length), keep track of buffer size
     char buf[(4 * 1024 * 1024)/8];
@@ -29,8 +29,25 @@ int main(){
     size_t buf_size = 0; // In bits
     while(true){
         if(buf_size < 8){ // 8 bits, length of longest key
-            bitbuf_read_head = bitbuf;
             if(!fill_buffer(bitbuf, &buf_size, bitbuf_read_head)){
+                // There may still be bits remaining (<8), encode the rest
+                while(buf_size > 0){
+                    for(int i = buf_size; i > 0; i--){
+                        if(LUT[i] == NULL){
+                            continue;
+                        }
+                        uint8_t key = 0;
+                        for(int j = 0; j < i; j++){
+                            key |= bitbuf_read_head[j] << (i - j - 1);
+                        }
+                        if(LUT[i][key] != 0){
+                            putchar(LUT[i][key]);
+                            bitbuf_read_head += i;
+                            buf_size -= i;
+                            break;
+                        }
+                    }
+                }
                 break;
             }
         }
@@ -53,6 +70,7 @@ int main(){
             }
         }
     }
+    printf("<EOF>");
     putchar('\n');
     fflush(stdout);
     return 0;

@@ -26,9 +26,7 @@ Both of these programs operate through standard input and output. You cannot spe
 
 `js8file-enc`: Given a filename `file.dat`, run `./js8file-enc < file.dat`, and it will output to your terminal screen. You can then copy this to the transmit window in JS8call (be sure to include the `FILE:` prefix!)
 
-Technically, you can redirect this further using `./js8file-enc < file.dat > file_encoded.txt` if you have a big file, but if it's a big file, it will take forever to send anyways.
-
-_NOTE_: `js8file-enc` emits an additional newline at the end for cleanliness. It shouldn't affect any operation, because JS8call should discard the newline as it is not part of the charset.
+_NOTE_: `js8file-enc` emits an `<EOF>` tag that should not be copied. This exists because the encoding might have spaces at the end of it. This should help you see the message end boundary.
 
 `./js8file-dec`: Given an encoded string, `<string>` (it should start with `FILE:`), run `echo -n "<string>" | js8file-dec > decoded.dat`.
 
