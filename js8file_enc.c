@@ -23,6 +23,7 @@ bool fill_buffer(bool * bitbuf, size_t * buf_size, bool * bitbuf_read_head){
 }
 
 int main(){
+    printf("FILE:");
     bool bitbuf[4 * 1024 * 1024]; // 4 MiB, not packed
     bool * bitbuf_read_head = bitbuf;
     size_t buf_size = 0; // In bits
@@ -34,7 +35,8 @@ int main(){
             }
         }
         int max_key_size = (buf_size < 8) ? buf_size : 8;
-        // Produce keys in descending order, check for first match, write to stdout, then move buffer head. If there are no codewords of length n (that is, LUT[n] is NULL), then we skip to the next length.
+        // Produce keys in descending order, check for first match, write to stdout, then move buffer head.
+        // If there are no codewords of length n (that is, LUT[n] is NULL), then we skip to the next length.
         for(int i = max_key_size; i > 0; i--){
             if(LUT[i] == NULL){
                 continue;
@@ -52,5 +54,6 @@ int main(){
         }
     }
     putchar('\n');
-    return 0; // Add this line to indicate successful program execution
+    fflush(stdout);
+    return 0;
 }
