@@ -2,7 +2,7 @@
 
 const codeword ILUT[0xff] = {
     [' '] = {.key=0b0, .bits=1},
-    ['e'] = {.key=0b1, .bits=1},
+    ['E'] = {.key=0b1, .bits=1},
     ['T'] = {.key=0b1101, .bits=4},
     ['A'] = {.key=0b0011, .bits=4},
     ['O'] = {.key=0b11111, .bits=5},
