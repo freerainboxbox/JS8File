@@ -32,4 +32,12 @@ _NOTE_: `js8file-enc` emits an additional newline at the end for cleanliness. It
 
 `./js8file-dec`: Given an encoded string, `<string>` (it should start with `FILE:`), run `echo -n "<string>" | js8file-dec > decoded.dat`.
 
+## Why did you make this?
+
+1. As a coding exercise. I wanted an excuse to do some encoding stuff in C, to keep my skills fresh.
+
+2. Because it's something JS8call can't do, and that just won't do!
+
+3. It might find some use for hams who aren't using English. Any UTF-8 encoded file can be fed into this program and sent over the air, meaning all languages are supported.
+
 _de KD2STC_
