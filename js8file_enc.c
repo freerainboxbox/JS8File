@@ -70,8 +70,8 @@ int main(){
             }
         }
     }
-    printf("<EOF>");
-    putchar('\n');
     fflush(stdout);
+    fprintf(stderr, "<EOF>\n");
+    fflush(stderr);
     return 0;
 }
