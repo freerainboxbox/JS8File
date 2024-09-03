@@ -46,10 +46,10 @@ int main(){
             fflush(stdout);
             break;
         }
-        codeword * codeword = &ILUT[candidate];
+        codeword * cw = &ILUT[candidate];
         // Append codeword to bitbuf
-        for(int i = 0; i < codeword->bits; i++){
-            *bitbuf_write_head = (codeword->key >> (codeword->bits - i - 1)) & 1;
+        for(int i = 0; i < cw->bits; i++){
+            *bitbuf_write_head = (cw->key >> (cw->bits - i - 1)) & 1;
             bitbuf_write_head++;
             buf_size++;
         }
