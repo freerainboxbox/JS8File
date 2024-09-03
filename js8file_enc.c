@@ -1,10 +1,10 @@
 #include "js8file_enc.h"
 
 // From stdin
-bool fill_buffer(bool * bitbuf, size_t * buf_size, bool * bitbuf_read_head){
+bool fill_buffer(bool * bitbuf, size_t * buf_size, bool ** bitbuf_read_head_ptr){
     // Justify remaining buffer back to the beginning
     if(*buf_size > 0){
-        memmove(bitbuf, bitbuf + *bitbuf_read_head, *buf_size);
+        memmove(bitbuf, bitbuf + **bitbuf_read_head_ptr, *buf_size);
     }
     // Read from stdin (indeterminate length), keep track of buffer size
     char buf[(4 * 1024 * 1024)/8];
@@ -18,7 +18,7 @@ bool fill_buffer(bool * bitbuf, size_t * buf_size, bool * bitbuf_read_head){
             (*buf_size)++;
         }
     }
-    bitbuf_read_head = bitbuf + *buf_size;
+    *bitbuf_read_head_ptr = bitbuf;
     return increase > 0;
 }
 
@@ -27,9 +27,10 @@ int main(){
     bool bitbuf[4 * 1024 * 1024]; // 4 MiB, not packed
     bool * bitbuf_read_head = bitbuf;
     size_t buf_size = 0; // In bits
+    int buf_fill_ctr = 0;
     while(true){
         if(buf_size < 8){ // 8 bits, length of longest key
-            if(!fill_buffer(bitbuf, &buf_size, bitbuf_read_head)){
+            if(!fill_buffer(bitbuf, &buf_size, &bitbuf_read_head)){
                 // There may still be bits remaining (<8), encode the rest
                 while(buf_size > 0){
                     for(int i = buf_size; i > 0; i--){
