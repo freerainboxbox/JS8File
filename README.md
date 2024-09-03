@@ -12,9 +12,11 @@ The code table has two most common symbols: ' ' and 'E'. Each consumes only 2 an
 
 ## Why not just base64?
 
-First of all, base64 comprises a larger symbol set than supported by JS8.
+As far as I can tell from the source code, only the symbols I have selected have dedicated short codewords. Anything from an extended character set is less efficient.
 
-Second, even if we were to use a smaller baseN encoding that happened to fit the limited set of symbols, it would not be optimized to the codebook, and will always be longer than this implementation.
+JS8call does not send lowercase. Even if we were to use a BaseN scheme fitting into the dedicated short codeword alphabet that just listed characters in lexicographic order, it would not be as efficient.
+
+UPDATE: Looking more carefully, it seems to be some subset of Varicode (which is used by PSK31). It should be possible to extend my usable symbols even further, and this will be done in a future iteration.
 
 ## How do I use it?
 
