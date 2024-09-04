@@ -20,7 +20,7 @@ UPDATE: Looking more carefully, it seems to be some subset of Varicode (which is
 
 ## How do I use it?
 
-You need a C compiler and `make`. If you're on Windows, either use MinGW or just run it on a WSL distro.
+You need a C compiler and `make`. If you're on Windows, either use Cygwin or just run it on a WSL distro. If you try to compile this program for Windows natively, you will need to increase the stack size manually (the default is 1 MiB, where for Linux it's 8 MiB). Standard streams expect text, not binary in this mode, so you may encounter undefined behavior. Use natively on Windows at your own risk.
 
 Clone the repo and just run `make` inside the repo directory. This will produce `js8file-enc` and `js8file-dec`.
 
