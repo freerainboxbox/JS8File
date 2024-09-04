@@ -32,6 +32,8 @@ _NOTE_: `js8file-enc` emits an `<EOF>` tag that should not be copied. This exist
 
 `./js8file-dec`: Given an encoded string, `<string>` (it should start with `FILE:`), run `echo -n "<string>" | js8file-dec > decoded.dat`.
 
+You can also install the programs locally with `make install` after running `make`. You can then uninstall them using `make uninstall`.
+
 ## Why did you make this?
 
 1. As a coding exercise. I wanted an excuse to do some encoding stuff in C, to keep my skills fresh.
