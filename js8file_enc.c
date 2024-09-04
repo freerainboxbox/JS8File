@@ -28,8 +28,8 @@ int main(){
     bool * bitbuf_read_head = bitbuf;
     size_t buf_size = 0; // In bits
     while(true){
-        if(buf_size < 8){ // 8 bits, length of longest key
-            if(!fill_buffer(bitbuf, &buf_size, &bitbuf_read_head)){
+        if(__builtin_expect(buf_size < 8, false)){ // 8 bits, length of longest key
+            if(__builtin_expect(!fill_buffer(bitbuf, &buf_size, &bitbuf_read_head), false)){
                 // There may still be bits remaining (<8), encode the rest
                 while(buf_size > 0){
                     for(int i = buf_size; i > 0; i--){
@@ -40,7 +40,7 @@ int main(){
                         for(int j = 0; j < i; j++){
                             key |= bitbuf_read_head[j] << (i - j - 1);
                         }
-                        if(LUT[i][key] != 0){
+                        if(__builtin_expect(LUT[i][key] != 0, false)){
                             putchar(LUT[i][key]);
                             bitbuf_read_head += i;
                             buf_size -= i;
@@ -62,7 +62,7 @@ int main(){
             for(int j = 0; j < i; j++){
                 key |= bitbuf_read_head[j] << (i - j - 1);
             }
-            if(LUT[i][key] != 0){
+            if(__builtin_expect(LUT[i][key] != 0, false)){
                 putchar(LUT[i][key]);
                 bitbuf_read_head += i;
                 buf_size -= i;

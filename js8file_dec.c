@@ -38,12 +38,12 @@ int main(){
     Once bitbuf is near capacity (< 8 bits left), emit bytes.
     This check should be at the beginning of each iteration. */
     while(true){
-        if(sizeof(bitbuf) - buf_size < 8){
+        if(__builtin_expect(sizeof(bitbuf) - buf_size < 8, false)){
             emit_bytes(bitbuf, &buf_size, &bitbuf_write_head);
         }
         // Load 1 unsigned char from stdin, break if EOF
         int candidate = getchar();
-        if(candidate == EOF){
+        if(__builtin_expect(candidate == EOF, false)){
             emit_bytes(bitbuf, &buf_size, &bitbuf_write_head);
             fflush(stdout);
             break;
