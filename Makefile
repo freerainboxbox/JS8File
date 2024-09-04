@@ -1,5 +1,6 @@
 
 CFLAGS := -O3 -mtune=native -march=native
+CC := gcc
 
 all: clean js8file-enc js8file-dec
 
@@ -12,15 +13,17 @@ uninstall:
 	sudo rm -f /usr/local/bin/js8file-dec
 
 js8file-enc: js8file_enc.c
-	gcc $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -o $@ $<
 
 js8file-dec: js8file_dec.c
-	gcc $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -o $@ $<
 
 clean-enc:
 	rm -f js8file-enc
+	rm -f js8file-enc.exe
 
 clean-dec:
 	rm -f js8file-dec
+	rm -f js8file-dec.exe
 
 clean: clean-enc clean-dec
