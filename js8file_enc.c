@@ -4,10 +4,10 @@
 bool fill_buffer(bool * bitbuf, size_t * buf_size, bool ** bitbuf_read_head_ptr){
     // Justify remaining buffer back to the beginning
     if(*buf_size > 0){
-        memmove(bitbuf, bitbuf + **bitbuf_read_head_ptr, *buf_size);
+        memmove(bitbuf, *bitbuf_read_head_ptr, *buf_size);
     }
     // Read from stdin (indeterminate length), keep track of buffer size
-    char buf[(4 * 1024 * 1024)/8];
+    char buf[BUF_SIZE];
     // The max bytes here is sizeof(buf) - ceil(*buf_size/8) expressed in a roundabout way.
     // This will fill our byte buffer as much as possible for the bit buffer to be near-full in the next step.
     size_t increase = fread(buf, 1, sizeof(buf) - ((*buf_size+8-1)/8), stdin);
@@ -24,7 +24,7 @@ bool fill_buffer(bool * bitbuf, size_t * buf_size, bool ** bitbuf_read_head_ptr)
 
 int main(){
     printf("FILE:");
-    bool bitbuf[4 * 1024 * 1024]; // 4 MiB, not packed
+    bool bitbuf[BUF_SIZE*8]; // 4 MiB, not packed
     bool * bitbuf_read_head = bitbuf;
     size_t buf_size = 0; // In bits
     int buf_fill_ctr = 0;

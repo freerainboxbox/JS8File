@@ -13,15 +13,15 @@ void emit_bytes(bool * bitbuf, size_t * buf_size, bool ** bitbuf_write_head_ptr)
         *buf_size -= 8;
     }
     // Justify remaining buffer back to the beginning
-    for (int i = 0; i < *buf_size; i++) {
-        bitbuf[i] = bitbuf_read_head[i];
+    if(*buf_size > 0){
+        memmove(bitbuf, bitbuf_read_head, *buf_size);
     }
     // Set write head to next available bit
     *bitbuf_write_head_ptr = bitbuf + *buf_size;
 }
 
 int main(){
-    bool bitbuf[4 * 1024 * 1024]; // 4 MiB, not packed
+    bool bitbuf[BUF_SIZE*8]; // 4 MiB, not packed
     bool * bitbuf_write_head = bitbuf;
     size_t buf_size = 0; // In bits
     // Load 5 bytes from stdin (fail if less than 5 bytes)
