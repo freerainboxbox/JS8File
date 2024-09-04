@@ -24,10 +24,9 @@ bool fill_buffer(bool * bitbuf, size_t * buf_size, bool ** bitbuf_read_head_ptr)
 
 int main(){
     printf("FILE:");
-    bool bitbuf[BUF_SIZE*8]; // 4 MiB, not packed
+    bool bitbuf[BUF_SIZE*8];
     bool * bitbuf_read_head = bitbuf;
     size_t buf_size = 0; // In bits
-    int buf_fill_ctr = 0;
     while(true){
         if(buf_size < 8){ // 8 bits, length of longest key
             if(!fill_buffer(bitbuf, &buf_size, &bitbuf_read_head)){

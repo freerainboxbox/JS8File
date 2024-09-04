@@ -21,7 +21,7 @@ void emit_bytes(bool * bitbuf, size_t * buf_size, bool ** bitbuf_write_head_ptr)
 }
 
 int main(){
-    bool bitbuf[BUF_SIZE*8]; // 4 MiB, not packed
+    bool bitbuf[BUF_SIZE*8];
     bool * bitbuf_write_head = bitbuf;
     size_t buf_size = 0; // In bits
     // Load 5 bytes from stdin (fail if less than 5 bytes)
@@ -34,7 +34,9 @@ int main(){
     if(strcmp(header, "FILE:")){
         return 1;
     }
-    // Read symbols from stdin, decode into bits and append to bitbuf. Once bitbuf is near capacity (< 8 bits left), emit bytes. This check should be at the beginning of each iteration.
+    /* Read symbols from stdin, decode into bits and append to bitbuf.
+    Once bitbuf is near capacity (< 8 bits left), emit bytes.
+    This check should be at the beginning of each iteration. */
     while(true){
         if(sizeof(bitbuf) - buf_size < 8){
             emit_bytes(bitbuf, &buf_size, &bitbuf_write_head);
